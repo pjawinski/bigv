@@ -1,7 +1,7 @@
 ﻿* Encoding: UTF-8.
-** ============================================================================
+** ==========================================================
 ** === The Big Five personality traits and CNS arousal in the resting state ===
-** ============================================================================.
+** ==========================================================.
 
 ** Selection criteria for EEG-vigilance analysis (LIFE DQP)
 **                         T00057 - EEG
@@ -24,9 +24,9 @@
 **                         Ausschluss_Med_EEGkrit_201602: EEG affecting drugs
 **                         Ausschluss_Med_EEGrisk_201602: Drugs that potentially affect the EEG
 
-** ===================================
+** =============================
 ** === Get data and select sample  ===
-** ===================================.
+** =============================.
 
 ** set working directory.
 cd '/Users/philippe/desktop/projects/bigv_arousal'.
@@ -149,9 +149,9 @@ FREQUENCIES VARIABLES=Filter_NEO_VIGALL
   /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
   /ORDER=ANALYSIS.
 
-** =================================================
+** =======================================
 ** === Descriptive statistics and Conbachs alpha ===
-** =================================================.
+** =======================================.
 
 ** age and sex.
 FREQUENCIES VARIABLES=Ruhe_Alter RKM_Geschlecht
@@ -165,9 +165,9 @@ FREQUENCIES VARIABLES=NEO_N_T NEO_E_T NEO_O_T NEO_A_T NEO_C_T VIGALL_DT3_214_V_1
   /NTILES=4
   /ORDER=ANALYSIS.
 
-** ============================
+** ======================
 ** === Internal consistency ===
-** ============================.
+** ======================.
 
 * Neuroticism (.906).
 RELIABILITY
@@ -239,42 +239,42 @@ RELIABILITY
   /STATISTICS=CORR.
 
 ** Neuroticism - Facets.
-** N1 - Anxiety (.803).
+** N1 - Anxiety (.803), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V01, NEO_PI_R_V31, NEO_PI_R_V61, NEO_PI_R_V91, NEO_PI_R_V121, NEO_PI_R_V151, NEO_PI_R_V181, NEO_PI_R_V211
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** N2 - Angry Hostility (.697).
+** N2 - Angry Hostility (.697), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V06, NEO_PI_R_V36, NEO_PI_R_V66, NEO_PI_R_V96, NEO_PI_R_V126, NEO_PI_R_V156, NEO_PI_R_V186, NEO_PI_R_V216
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** N3 - Depression (.773).
+** N3 - Depression (.773), n = 466.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V11, NEO_PI_R_V41, NEO_PI_R_V71, NEO_PI_R_V101, NEO_PI_R_V131, NEO_PI_R_V161, NEO_PI_R_V191, NEO_PI_R_V221
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** N4 - Self-Consciousness (.668).
+** N4 - Self-Consciousness (.668), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V16, NEO_PI_R_V46, NEO_PI_R_V76, NEO_PI_R_V106, NEO_PI_R_V136, NEO_PI_R_V166, NEO_PI_R_V196, NEO_PI_R_V226
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** N5 - Impulsiveness (.529).
+** N5 - Impulsiveness (.529), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V21, NEO_PI_R_V51, NEO_PI_R_V81, NEO_PI_R_V111, NEO_PI_R_V141, NEO_PI_R_V171, NEO_PI_R_V201, NEO_PI_R_V231
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** N6 - Vulnerability (.735).
+** N6 - Vulnerability (.735), n = 466.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V26, NEO_PI_R_V56, NEO_PI_R_V86, NEO_PI_R_V116, NEO_PI_R_V146, NEO_PI_R_V176, NEO_PI_R_V206, NEO_PI_R_V236
   /SCALE('ALL VARIABLES') ALL
@@ -283,42 +283,42 @@ RELIABILITY
 
 
 ** Extraversion - Facets.
-** E1 - Warmth (.722).
+** E1 - Warmth (.722), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V02, NEO_PI_R_V32, NEO_PI_R_V62, NEO_PI_R_V92, NEO_PI_R_V122, NEO_PI_R_V152, NEO_PI_R_V182, NEO_PI_R_V212
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** E2 - Gregariousness (.745).
+** E2 - Gregariousness (.745), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V07, NEO_PI_R_V37, NEO_PI_R_V67, NEO_PI_R_V97, NEO_PI_R_V127, NEO_PI_R_V157, NEO_PI_R_V187, NEO_PI_R_V217
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** E3 - Assertiveness (.826).
+** E3 - Assertiveness (.826), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V12, NEO_PI_R_V42, NEO_PI_R_V72, NEO_PI_R_V102, NEO_PI_R_V132, NEO_PI_R_V162, NEO_PI_R_V192, NEO_PI_R_V222
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** E4 - Activity (.660).
+** E4 - Activity (.660), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V17, NEO_PI_R_V47, NEO_PI_R_V77, NEO_PI_R_V107, NEO_PI_R_V137, NEO_PI_R_V167, NEO_PI_R_V197, NEO_PI_R_V227
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** E5 - Excitement-Seeking (.577).
+** E5 - Excitement-Seeking (.577), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V22, NEO_PI_R_V52, NEO_PI_R_V82, NEO_PI_R_V112, NEO_PI_R_V142, NEO_PI_R_V172, NEO_PI_R_V202, NEO_PI_R_V232
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** E6 - Positive Emotions (.796).
+** E6 - Positive Emotions (.796), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V27, NEO_PI_R_V57, NEO_PI_R_V87, NEO_PI_R_V117, NEO_PI_R_V147, NEO_PI_R_V177, NEO_PI_R_V207, NEO_PI_R_V237
   /SCALE('ALL VARIABLES') ALL
@@ -326,42 +326,42 @@ RELIABILITY
   /STATISTICS=CORR.
 
 ** Openness to experience - Facets.
-** O1 - Fantasy (.682).
+** O1 - Fantasy (.682), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V03, NEO_PI_R_V33, NEO_PI_R_V63, NEO_PI_R_V93, NEO_PI_R_V123, NEO_PI_R_V153, NEO_PI_R_V183, NEO_PI_R_V213
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** O2 - Aesthetics (.756).
+** O2 - Aesthetics (.756), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V08, NEO_PI_R_V38, NEO_PI_R_V68, NEO_PI_R_V98, NEO_PI_R_V128, NEO_PI_R_V158, NEO_PI_R_V188, NEO_PI_R_V218
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** O3 - Feelings (.702).
+** O3 - Feelings (.702), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V13, NEO_PI_R_V43, NEO_PI_R_V73, NEO_PI_R_V103, NEO_PI_R_V133, NEO_PI_R_V163, NEO_PI_R_V193, NEO_PI_R_V223
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** O4 - Actions (.601).
+** O4 - Actions (.601), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V18, NEO_PI_R_V48, NEO_PI_R_V78, NEO_PI_R_V108, NEO_PI_R_V138, NEO_PI_R_V168, NEO_PI_R_V198, NEO_PI_R_V228
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** O5 - Ideas (.740).
+** O5 - Ideas (.740), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V23, NEO_PI_R_V53, NEO_PI_R_V83, NEO_PI_R_V113, NEO_PI_R_V143, NEO_PI_R_V173, NEO_PI_R_V203, NEO_PI_R_V233
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** O6 - Values (.458).
+** O6 - Values (.458), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V28, NEO_PI_R_V58, NEO_PI_R_V88, NEO_PI_R_V118, NEO_PI_R_V148, NEO_PI_R_V178, NEO_PI_R_V208, NEO_PI_R_V238
   /SCALE('ALL VARIABLES') ALL
@@ -369,42 +369,42 @@ RELIABILITY
   /STATISTICS=CORR.
 
 * Agreeableness - Facets.
-** A1 - Trust (.682).
+** A1 - Trust (.682), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V04, NEO_PI_R_V34, NEO_PI_R_V64, NEO_PI_R_V94, NEO_PI_R_V124, NEO_PI_R_V154, NEO_PI_R_V184, NEO_PI_R_V214
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** A2 - Straightforwardness (.539).
+** A2 - Straightforwardness (.539), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V09, NEO_PI_R_V39, NEO_PI_R_V69, NEO_PI_R_V99, NEO_PI_R_V129, NEO_PI_R_V159, NEO_PI_R_V189, NEO_PI_R_V219
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** A3 - Altruism (.681).
+** A3 - Altruism (.681), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V14, NEO_PI_R_V44, NEO_PI_R_V74, NEO_PI_R_V104, NEO_PI_R_V134, NEO_PI_R_V164, NEO_PI_R_V194, NEO_PI_R_V224
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** A4 - Compliance (.548).
+** A4 - Compliance (.548), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V19, NEO_PI_R_V49, NEO_PI_R_V79, NEO_PI_R_V109, NEO_PI_R_V139, NEO_PI_R_V169, NEO_PI_R_V199, NEO_PI_R_V229
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** A5 - Modesty (.700).
+** A5 - Modesty (.700), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V24, NEO_PI_R_V54, NEO_PI_R_V84, NEO_PI_R_V114, NEO_PI_R_V144, NEO_PI_R_V174, NEO_PI_R_V204, NEO_PI_R_V234
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** A6 - Tender-Mindedness (.485).
+** A6 - Tender-Mindedness (.485), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V29, NEO_PI_R_V59, NEO_PI_R_V89, NEO_PI_R_V119, NEO_PI_R_V149, NEO_PI_R_V179, NEO_PI_R_V209, NEO_PI_R_V239
   /SCALE('ALL VARIABLES') ALL
@@ -412,51 +412,51 @@ RELIABILITY
   /STATISTICS=CORR.
 
 ** Conscientiousness - Facets.
-** C1 - Competence (.685).
+** C1 - Competence (.685), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V05, NEO_PI_R_V35, NEO_PI_R_V65, NEO_PI_R_V95, NEO_PI_R_V125, NEO_PI_R_V155, NEO_PI_R_V185, NEO_PI_R_V215
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** C2 - Order (.585).
+** C2 - Order (.585), n = 467.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V10, NEO_PI_R_V40, NEO_PI_R_V70, NEO_PI_R_V100, NEO_PI_R_V130, NEO_PI_R_V160, NEO_PI_R_V190, NEO_PI_R_V220
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** C3 - Dutifulness (.614).
+** C3 - Dutifulness (.614), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V15, NEO_PI_R_V45, NEO_PI_R_V75, NEO_PI_R_V105, NEO_PI_R_V135, NEO_PI_R_V165, NEO_PI_R_V195, NEO_PI_R_V225
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** C4 - Achievement Striving (.637).
+** C4 - Achievement Striving (.637), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V20, NEO_PI_R_V50, NEO_PI_R_V80, NEO_PI_R_V110, NEO_PI_R_V140, NEO_PI_R_V170, NEO_PI_R_V200, NEO_PI_R_V230
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** C5 - Self-Discipline (.710).
+** C5 - Self-Discipline (.710), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V25, NEO_PI_R_V55, NEO_PI_R_V85, NEO_PI_R_V115, NEO_PI_R_V145, NEO_PI_R_V175, NEO_PI_R_V205, NEO_PI_R_V235
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** C6 - Deliberation (.681).
+** C6 - Deliberation (.681), n = 468.
 RELIABILITY
   /VARIABLES=NEO_PI_R_V30, NEO_PI_R_V60, NEO_PI_R_V90, NEO_PI_R_V120, NEO_PI_R_V150, NEO_PI_R_V180, NEO_PI_R_V210, NEO_PI_R_V240
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** ================================================================
+** ================================================
 ** === Data extraction for statistical analysis in Matlab and R ===
-** ================================================================.
+** ================================================.
 
 ** Save NEO dataset with variables of interest in .sav format.
 SELECT IF (Filter_NEO_VIGALL eq 1).
