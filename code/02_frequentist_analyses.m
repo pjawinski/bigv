@@ -8,7 +8,7 @@ cd /Users/philippe/desktop/projects/bigv_arousal
 % add path with function pncovs
 addpath code/functions/
 
-% importdata
+% importdata (synthetic dataset at 'synthetic/01_bigv_arousal_synthetic.txt')
 NEO = importdata('code/derivatives/01_bigv_arousal.txt');
 NEO.IID = NEO.textdata(2:end,1);
 NEO.varnames = NEO.textdata(1,3:end)';

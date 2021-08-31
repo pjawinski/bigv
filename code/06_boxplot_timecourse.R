@@ -12,7 +12,7 @@ renv::restore(prompt = FALSE)
 # attach packages to current R session
 library(ggplot2)
 
-# load dataset
+# load dataset (synthetic dataset at 'synthetic/01_bigv_arousal_synthetic.txt')
 df = read.delim('code/derivatives/01_bigv_arousal.txt', sep='\t', header=T ,quote = "\"",stringsAsFactors=FALSE)
 bigv = df[,c('SIC', 'VIGALL_DT3_214_EEG_Code','VIGALL_DT3_214_V_1_20', 'VIGALL_DT3_214_SI_20_5', 'VIGALL_DT3_214_V_LogSqR_adj',
              'NEO_N_T', 'NEO_E_T', 'NEO_O_T', 'NEO_A_T', 'NEO_C_T')]

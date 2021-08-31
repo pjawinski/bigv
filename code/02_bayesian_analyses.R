@@ -13,7 +13,7 @@ renv::restore(prompt = FALSE)
 library(BayesFactor)
 library(rstanarm)
 
-# load data
+# load data (synthetic dataset at 'synthetic/01_bigv_arousal_synthetic.txt')
 NEO = read.delim('code/derivatives/01_bigv_arousal.txt', sep = '\t', header = TRUE)
 
 # carry out bayesian correlations: NEO personality dimensions x EEG-vigilance

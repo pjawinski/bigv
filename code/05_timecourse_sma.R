@@ -14,7 +14,7 @@ library(data.table)
 library(plyr)
 library(stringr)
 
-# import data
+# import data (synthetic dataset at 'synthetic/vigall_classifications_synthetic.txt')
 vigall = read.table('data/vigall_classifications.txt', header = T)
 
 # transform from characters to numbers
