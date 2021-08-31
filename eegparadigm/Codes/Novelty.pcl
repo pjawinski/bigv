@@ -1,0 +1,330 @@
+#-- pcl part
+sub
+	int get_stim_rt
+begin
+	int rt;
+	rt = stimulus_manager.last_stimulus_data(). reaction_time ();
+	return rt
+end;
+
+string log_name = "Novelty_rt.txt";
+output_file out = new output_file;
+out.open(log_name);
+out.print("Trial");
+out.print("\t");
+out.print("Type");
+out.print("\t");
+out.print ("RT");
+out.print("\t");
+out.print("\n");
+out.close();
+
+int num_trial = 600;
+int code_reaktion;
+int rt_vett;
+
+array<int> type[num_trial];
+output_port parallel = output_port_manager.get_port (1);
+
+
+input_file sequenz = new input_file;
+sequenz.open ("seq_600.txt");
+
+loop int count = 0
+	until sequenz.end_of_file ()
+		begin
+			count = count + 1;
+			type[count] = sequenz.get_int ();
+		end;
+
+trial3_verzoegerung.present ();
+
+loop int i = 1
+   until i > num_trial
+      begin
+			
+         if i == 300
+         then
+            trial3_verzoegerung.present ();
+				trial4_pause.present ();
+				trial3_verzoegerung.present ();
+         end;
+			
+
+			if type[i] == 1
+			then
+			   trial1_standard.present ();
+			elseif type[i] == 2
+			then
+			   trial2_target.present ();
+			elseif type[i] == 3
+			then
+			   trial4.present ();
+			elseif type[i] == 4
+			then
+			   trial5.present ();
+			elseif type[i] == 5
+			then
+			   trial6.present ();
+			elseif type[i] == 6
+			then
+			   trial7.present ();
+			elseif type[i] == 7
+			then
+			   trial8.present ();
+			elseif type[i] == 8
+			then
+			   trial9.present ();
+			elseif type[i] == 9
+			then
+			   trial10.present ();
+			elseif type[i] == 10
+			then
+			   trial11.present ();
+			elseif type[i] == 11
+			then
+			   trial12.present ();
+			elseif type[i] == 12
+			then
+			   trial13.present ();
+			elseif type[i] == 13
+			then
+			   trial14.present ();
+			elseif type[i] == 14
+			then
+			   trial15.present ();
+			elseif type[i] == 15
+			then
+			   trial16.present ();
+			elseif type[i] == 16
+			then
+			   trial17.present ();
+			elseif type[i] == 17
+			then
+			   trial18.present ();
+			elseif type[i] == 18
+			then
+			   trial19.present ();
+			elseif type[i] == 19
+			then
+			   trial20.present ();
+			elseif type[i] == 20
+			then
+			   trial21.present ();
+			elseif type[i] == 21
+			then
+			   trial22.present ();
+			elseif type[i] == 22
+			then
+			   trial23.present ();
+			elseif type[i] == 23
+			then
+			   trial24.present ();
+			elseif type[i] == 24
+			then
+			   trial25.present ();
+			elseif type[i] == 25
+			then
+			   trial26.present ();
+			elseif type[i] == 26
+			then
+			   trial27.present ();
+			elseif type[i] == 27
+			then
+			   trial28.present ();
+			elseif type[i] == 28
+			then
+			   trial29.present ();
+			elseif type[i] == 29
+			then
+			   trial30.present ();
+			elseif type[i] == 30
+			then
+			   trial31.present ();
+			elseif type[i] == 31
+			then
+			   trial32.present ();
+			elseif type[i] == 32
+			then
+			   trial33.present ();
+			elseif type[i] == 33
+			then
+			   trial34.present ();
+			elseif type[i] == 34
+			then
+			   trial35.present ();
+			elseif type[i] == 35
+			then
+			   trial36.present ();
+			elseif type[i] == 36
+			then
+			   trial37.present ();
+			elseif type[i] == 37
+			then
+			   trial38.present ();
+			elseif type[i] == 38
+			then
+			   trial39.present ();
+			elseif type[i] == 39
+			then
+			   trial40.present ();
+			elseif type[i] == 40
+			then
+			   trial41.present ();
+			elseif type[i] == 41
+			then
+			   trial42.present ();
+			elseif type[i] == 42
+			then
+			   trial43.present ();
+			elseif type[i] == 43
+			then
+			   trial44.present ();
+			elseif type[i] == 44
+			then
+			   trial45.present ();
+			elseif type[i] == 45
+			then
+			   trial46.present ();
+			elseif type[i] == 46
+			then
+			   trial47.present ();
+			elseif type[i] == 47
+			then
+			   trial48.present (); 
+			elseif type[i] == 48
+			then
+			   trial49.present ();
+			elseif type[i] == 49
+			then
+			   trial50.present ();
+			elseif type[i] == 50
+			then
+			   trial51.present ();
+			elseif type[i] == 51
+			then
+			   trial52.present ();
+			elseif type[i] == 52
+			then
+			   trial53.present ();
+			elseif type[i] == 53
+			then
+			   trial54.present ();
+			elseif type[i] == 54
+			then
+			   trial55.present ();
+			elseif type[i] == 55
+			then
+			   trial56.present ();
+			elseif type[i] == 56
+			then
+			   trial57.present ();
+			elseif type[i] == 57
+			then
+			   trial58.present ();
+			elseif type[i] == 58
+			then
+			   trial59.present ();
+			elseif type[i] == 59
+			then
+			   trial60.present ();
+			elseif type[i] == 60
+			then
+			   trial61.present ();
+			elseif type[i] == 61
+			then
+			   trial62.present ();
+			elseif type[i] == 62
+			then
+			   trial63.present ();
+			elseif type[i] == 63
+			then
+			   trial64.present ();
+			elseif type[i] == 64
+			then
+			   trial65.present ();
+			elseif type[i] == 65
+			then
+			   trial66.present ();
+			elseif type[i] == 66
+			then
+			   trial67.present ();
+			elseif type[i] == 67
+			then
+			   trial68.present ();
+			elseif type[i] == 68
+			then
+			   trial69.present ();
+			elseif type[i] == 69
+			then
+			   trial70.present ();
+			elseif type[i] == 70
+			then
+			   trial71.present ();
+			elseif type[i] == 71
+			then
+			   trial72.present ();
+			elseif type[i] == 72
+			then
+			   trial73.present ();
+			elseif type[i] == 73
+			then
+			   trial74.present ();
+			elseif type[i] == 74
+			then
+			   trial75.present ();
+			end;
+
+sub
+	string get_response_info
+begin
+	string cap;
+	if (bool( response_manager.response_count() )) then
+      response_data last = response_manager.last_response_data();
+      cap = "responses: " + string( response_manager.response_count() ) + 
+            "\nbutton: " + string( last.button() ) +
+            "\ntype: ";
+    	
+		if response_manager.response_count () > 0
+			then
+				if type[i] == 1
+				then code_reaktion = 11;
+				parallel.send_code (code_reaktion);
+				elseif type[i] == 2
+				then code_reaktion = 12;
+				parallel.send_code (code_reaktion);
+				end;
+			elseif response_manager.response_count () == 0
+			then
+				if type[i] == 1
+				then code_reaktion = 21;
+				parallel.send_code (code_reaktion);
+				elseif type[i] == 2
+				then code_reaktion = 22;
+				end;
+		end;
+			cap = cap + "\ncode: " + string( last.code() ) +
+							"\ntime: " + string( last.time() ) +
+							"\nunc_dms: " + string( last.unc_dms() ); 
+	else
+		cap = "No new responses";
+	end;            
+return cap
+end;
+
+	rt_vett = get_stim_rt();
+
+	out.open_append (log_name);
+	out.print(i);
+	out.print("\t");
+	out.print(type[i]-1);
+	out.print ("\t");
+	out.print(rt_vett);
+	out.print("\n");
+	out.close();
+	
+	i = i + 1;
+end;
+
+trial76_ende.present ();
+trial77_ende.present ();

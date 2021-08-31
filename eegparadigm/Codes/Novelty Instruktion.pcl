@@ -1,0 +1,54 @@
+#-- pcl part --
+int clock_start;
+int clock_start_pause;
+int clock_stop;
+int num_trial = 5;
+int code_reaktion;
+
+array<int> type[num_trial];
+
+output_port parallel = output_port_manager.get_port (1);
+
+
+clock_start = clock.time ();
+	loop int i = clock.time ();
+		until i-clock_start > 1000
+			begin
+				i = clock.time ();
+	end;	
+
+trial1_instruktion.present ();
+trial7_pause.present ();
+
+loop int i = 1
+	until i > num_trial
+		begin
+			trial5_standard.present ();
+			trial6_target.present ();
+
+			if response_manager.response_count () > 0
+			then
+				if type[i] == 10
+				then code_reaktion = 11;
+				parallel.send_code (code_reaktion);
+				elseif type[i] == 20
+				then code_reaktion = 12;
+				parallel.send_code (code_reaktion);
+				end;
+			end;
+				
+			if response_manager.response_count () == 0
+			then
+				if type[i] == 10
+				then code_reaktion = 21;
+				parallel.send_code (code_reaktion);
+				elseif type[i] == 20
+				then code_reaktion = 22;
+				end;
+			end;
+			
+	i = i + 1;
+end;
+
+trail3_nachfrage.present ();
+trail4_ende_untersuchung.present ();

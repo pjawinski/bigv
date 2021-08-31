@@ -1,0 +1,487 @@
+﻿* Encoding: UTF-8.
+** ============================================================================
+** === The Big Five personality traits and CNS arousal in the resting state ===
+** ============================================================================.
+
+** Selection criteria for EEG-vigilance analysis (LIFE DQP)
+**                         T00057 - EEG
+**                                      Auswahl_1: Incomplete resting-state EEG
+**                         T00058 - Cardiological history
+**                                      Auswahl_2: Stroke
+**                         T000173 - Medical history (A1)
+**                                      Auswahl_3: Stroke
+**                                      Auswahl_4: Epilepsy
+**                                      Auswahl_5: Parkinson
+**                                      Auswahl_7: Multiple Sclerosis
+**                         T00338 - EEG appraisal
+**                                      Auswahl_8: Pathological EEG
+**                                      Auswahl_18: Low-voltage alpha, alpha variant rhythm, other problems with EEG
+**                         T00399 - Medical history (B4B)
+**                                      Auswahl_13: Intracranial hemorrhage
+**                                      Auswahl_15: Skull fracture
+**                                      Auswahl_16: Meningitis
+**                                      Auswahl_17: Cerebral tumor
+**                         Ausschluss_Med_EEGkrit_201602: EEG affecting drugs
+**                         Ausschluss_Med_EEGrisk_201602: Drugs that potentially affect the EEG
+
+** ===================================
+** === Get data and select sample  ===
+** ===================================.
+
+** set working directory.
+cd '/Users/philippe/desktop/projects/bigv_arousal'.
+
+** load data.
+GET FILE='data/main.sav'.
+DATASET NAME MAIN.
+DATASET ACTIVATE MAIN.
+
+** Create SCID filter variable.
+COMPUTE Ausschluss_SKID=0.
+EXECUTE.
+IF (SKID_Panik_Acut OR SKID_Agoraphobie_Acut OR SKID_Soziale_Phobie_Acut OR SKID_Zwang_Acut OR SKID_PTSD_Acut OR SKID_GAD OR SKID_Angst_Störung_GMC_SI_V4_5_Acut 
+      OR SKID_Angst_Störung_GMC_V7_8_Acut OR SKID_Angst_Störung_SI_V7_8_Acut OR SKID_Stress_Acut
+      OR SKID_Count_Substanzinduzierte_Störungen OR SKID_Count_Psychotische_Störungen
+      OR SKID_Depressives_Syndrom_Akut = 1 OR SKID_Manisches_Syndrom_Akut=1 OR SKID_Hypomanes_Syndrom_Akut=1) Ausschluss_SKID=1.
+EXECUTE.
+FORMATS Ausschluss_SKID(F8.0).
+VALUE LABELS Ausschluss_SKID
+  0 'Inclusion'
+  1 'Exclusion'.
+EXECUTE.	
+
+** Step 1: Select individuals with Big Five and resting-state EEG data: N = 562.
+COMPUTE Filter_NEO_VIGALL=1.
+EXECUTE.
+IF  ((SYSMIS(NEO_N_T) AND SYSMIS(NEO_E_T) AND SYSMIS(NEO_O_T) AND SYSMIS(NEO_A_T) AND SYSMIS(NEO_C_T)) OR SYSMIS(VIGALL_DT3_214_V_1_20)
+      OR VIGALL_DT_RETEST=1 OR Auswahl_1 = 1) Filter_NEO_VIGALL=0.
+EXECUTE.
+FORMATS Filter_NEO_VIGALL(F8.0).
+VALUE LABELS Filter_NEO_VIGALL
+  0 'Exclusion'
+  1 'Inclusion'.
+EXECUTE.
+
+USE ALL.
+COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
+VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
+VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
+FORMATS filter_$ (f1.0).
+FILTER BY filter_$.
+
+FREQUENCIES VARIABLES=Filter_NEO_VIGALL
+  /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
+  /ORDER=ANALYSIS.
+
+** Step 2: Select individuals from step1 + no current intake of EEG-affecting drugs and no prior diagnosis of stroke, multiple sclerosis, Parkinson’s disease, epilepsy, skull fracture, cerebral tumor, or meningitis. N = 533.
+COMPUTE Filter_NEO_VIGALL=1.
+EXECUTE.
+IF  ((SYSMIS(NEO_N_T) AND SYSMIS(NEO_E_T) AND SYSMIS(NEO_O_T) AND SYSMIS(NEO_A_T) AND SYSMIS(NEO_C_T)) OR SYSMIS(VIGALL_DT3_214_V_1_20)
+      OR VIGALL_DT_RETEST=1 OR Auswahl_1=1
+      OR Ausschluss_Med_EEGkrit_201602 = 1 OR Ausschluss_Med_EEGrisk_201602 = 1
+      OR Auswahl_2=1 OR Auswahl_3=1 OR Auswahl_4=1 OR Auswahl_5=1 OR Auswahl_7=1 OR Auswahl_13=1 OR Auswahl_15=1 OR Auswahl_16=1 OR Auswahl_17=1) Filter_NEO_VIGALL=0.
+EXECUTE.
+FORMATS Filter_NEO_VIGALL(F8.0).
+VALUE LABELS Filter_NEO_VIGALL
+  0 'Exclusion'
+  1 'Inclusion'.
+EXECUTE.
+
+USE ALL.
+COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
+VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
+VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
+FORMATS filter_$ (f1.0).
+FILTER BY filter_$.
+
+FREQUENCIES VARIABLES=Filter_NEO_VIGALL
+  /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
+  /ORDER=ANALYSIS.
+
+** Step 3: Select individuals from step2 +  no history of psychotic disorders or substance dependence, current anxiety and affective disorders. N = 528.
+COMPUTE Filter_NEO_VIGALL=1.
+EXECUTE.
+IF  ((SYSMIS(NEO_N_T) AND SYSMIS(NEO_E_T) AND SYSMIS(NEO_O_T) AND SYSMIS(NEO_A_T) AND SYSMIS(NEO_C_T)) OR SYSMIS(VIGALL_DT3_214_V_1_20)
+      OR VIGALL_DT_RETEST=1 OR Auswahl_1=1
+      OR Ausschluss_Med_EEGkrit_201602 = 1 OR Ausschluss_Med_EEGrisk_201602 = 1 OR Ausschluss_SKID = 1
+      OR Auswahl_2=1 OR Auswahl_3=1 OR Auswahl_4=1 OR Auswahl_5=1 OR Auswahl_7=1 OR Auswahl_13=1 OR Auswahl_15=1 OR Auswahl_16=1 OR Auswahl_17=1) Filter_NEO_VIGALL=0.
+EXECUTE.
+FORMATS Filter_NEO_VIGALL(F8.0).
+VALUE LABELS Filter_NEO_VIGALL
+  0 'Exclusion'
+  1 'Inclusion'.
+EXECUTE.
+
+USE ALL.
+COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
+VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
+VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
+FORMATS filter_$ (f1.0).
+FILTER BY filter_$.
+
+FREQUENCIES VARIABLES=Filter_NEO_VIGALL
+  /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
+  /ORDER=ANALYSIS.
+
+** Final step: Select individuals from step 3 + no substantial artifacts, no low-voltage alpha, alpha variant rhythms, or pathological activity. N = 468.
+COMPUTE Filter_NEO_VIGALL=1.
+EXECUTE.
+IF  ((SYSMIS(NEO_N_T) AND SYSMIS(NEO_E_T) AND SYSMIS(NEO_O_T) AND SYSMIS(NEO_A_T) AND SYSMIS(NEO_C_T)) OR SYSMIS(VIGALL_DT3_214_V_1_20) 
+      OR VIGALL_DT_RETEST=1 OR Auswahl_1=1
+      OR VIGALL_DT3_214_VIGALL_Auswahl=0 OR VIGALL_DT3_214_AF_Test = 0 OR VIGALL_201508_ESF_Anmerkungen_Ausschluss = 1
+      OR Ausschluss_Med_EEGkrit_201602 = 1 OR Ausschluss_Med_EEGrisk_201602 = 1 OR Ausschluss_SKID = 1
+      OR Auswahl_1=1 OR Auswahl_2=1 OR Auswahl_3=1 OR Auswahl_4=1 OR Auswahl_5=1 OR Auswahl_7=1 OR Auswahl_8=1 OR Auswahl_18=1 OR Auswahl_13=1 OR Auswahl_15=1 OR Auswahl_16=1 OR Auswahl_17=1) Filter_NEO_VIGALL=0.
+EXECUTE.
+FORMATS Filter_NEO_VIGALL(F8.0).
+VALUE LABELS Filter_NEO_VIGALL
+  0 'Exclusion'
+  1 'Inclusion'.
+EXECUTE.
+
+USE ALL.
+COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
+VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
+VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
+FORMATS filter_$ (f1.0).
+FILTER BY filter_$.
+
+FREQUENCIES VARIABLES=Filter_NEO_VIGALL
+  /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
+  /ORDER=ANALYSIS.
+
+** =================================================
+** === Descriptive statistics and Conbachs alpha ===
+** =================================================.
+
+** age and sex.
+FREQUENCIES VARIABLES=Ruhe_Alter RKM_Geschlecht
+  /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
+  /ORDER=ANALYSIS.
+
+** Big Five personality traits and EEG-vigilance variables
+** Paste results into code/tables/template_descriptives.xlsx.
+FREQUENCIES VARIABLES=NEO_N_T NEO_E_T NEO_O_T NEO_A_T NEO_C_T VIGALL_DT3_214_V_1_20 VIGALL_DT3_214_SI_20_5 VIGALL_DT3_214_V_1_20
+  /STATISTICS=MEAN MEDIAN STDDEV SKEWNESS KURTOSIS MINIMUM MAXIMUM
+  /NTILES=4
+  /ORDER=ANALYSIS.
+
+** ============================
+** === Internal consistency ===
+** ============================.
+
+* Neuroticism (.906).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V01, NEO_PI_R_V06, NEO_PI_R_V11, NEO_PI_R_V16, NEO_PI_R_V21, NEO_PI_R_V26, 
+    NEO_PI_R_V31, NEO_PI_R_V36, NEO_PI_R_V41, NEO_PI_R_V46, NEO_PI_R_V51, NEO_PI_R_V56, NEO_PI_R_V61, 
+    NEO_PI_R_V66, NEO_PI_R_V71, NEO_PI_R_V76, NEO_PI_R_V81, NEO_PI_R_V86, NEO_PI_R_V91, NEO_PI_R_V96, 
+    NEO_PI_R_V101, NEO_PI_R_V106, NEO_PI_R_V111, NEO_PI_R_V116, NEO_PI_R_V121, NEO_PI_R_V126, NEO_PI_R_V131, 
+    NEO_PI_R_V136, NEO_PI_R_V141, NEO_PI_R_V146, NEO_PI_R_V151, NEO_PI_R_V156, NEO_PI_R_V161, NEO_PI_R_V166,  
+    NEO_PI_R_V171, NEO_PI_R_V176, NEO_PI_R_V181, NEO_PI_R_V186, NEO_PI_R_V191, NEO_PI_R_V196, NEO_PI_R_V201, 
+    NEO_PI_R_V206, NEO_PI_R_V211, NEO_PI_R_V216, NEO_PI_R_V221, NEO_PI_R_V226, NEO_PI_R_V231, NEO_PI_R_V236
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+* Extraversion (.899).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V02, NEO_PI_R_V07, NEO_PI_R_V12, NEO_PI_R_V17, NEO_PI_R_V22, NEO_PI_R_V27,  
+    NEO_PI_R_V32, NEO_PI_R_V37, NEO_PI_R_V42, NEO_PI_R_V47, NEO_PI_R_V52, NEO_PI_R_V57, 
+    NEO_PI_R_V62, NEO_PI_R_V67, NEO_PI_R_V72, NEO_PI_R_V77, NEO_PI_R_V82, NEO_PI_R_V87,  
+    NEO_PI_R_V92, NEO_PI_R_V97, NEO_PI_R_V102, NEO_PI_R_V107, NEO_PI_R_V112, NEO_PI_R_V117, 
+    NEO_PI_R_V122, NEO_PI_R_V127, NEO_PI_R_V132, NEO_PI_R_V137, NEO_PI_R_V142, NEO_PI_R_V147, 
+    NEO_PI_R_V152, NEO_PI_R_V157, NEO_PI_R_V162, NEO_PI_R_V167, NEO_PI_R_V172, NEO_PI_R_V177, 
+    NEO_PI_R_V182, NEO_PI_R_V187, NEO_PI_R_V192, NEO_PI_R_V197, NEO_PI_R_V202, NEO_PI_R_V207, 
+    NEO_PI_R_V212, NEO_PI_R_V217, NEO_PI_R_V222, NEO_PI_R_V227, NEO_PI_R_V232, NEO_PI_R_V237
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+* Openness (.868).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V03, NEO_PI_R_V08, NEO_PI_R_V13, NEO_PI_R_V18, NEO_PI_R_V23, NEO_PI_R_V28,  
+    NEO_PI_R_V33, NEO_PI_R_V38, NEO_PI_R_V43, NEO_PI_R_V48, NEO_PI_R_V53, NEO_PI_R_V58, 
+    NEO_PI_R_V63, NEO_PI_R_V68, NEO_PI_R_V73, NEO_PI_R_V78, NEO_PI_R_V83, NEO_PI_R_V88,  
+    NEO_PI_R_V93, NEO_PI_R_V98, NEO_PI_R_V103, NEO_PI_R_V108, NEO_PI_R_V113, NEO_PI_R_V118, 
+    NEO_PI_R_V123, NEO_PI_R_V128, NEO_PI_R_V133, NEO_PI_R_V138, NEO_PI_R_V143, NEO_PI_R_V148, 
+    NEO_PI_R_V153, NEO_PI_R_V158, NEO_PI_R_V163, NEO_PI_R_V168, NEO_PI_R_V173, NEO_PI_R_V178, 
+    NEO_PI_R_V183, NEO_PI_R_V188, NEO_PI_R_V193, NEO_PI_R_V198, NEO_PI_R_V203, NEO_PI_R_V208, 
+    NEO_PI_R_V213, NEO_PI_R_V218, NEO_PI_R_V223, NEO_PI_R_V228, NEO_PI_R_V233, NEO_PI_R_V238
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+* Agreeableness (.836).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V04 NEO_PI_R_V09 NEO_PI_R_V14 NEO_PI_R_V19 NEO_PI_R_V24 NEO_PI_R_V29  
+    NEO_PI_R_V34 NEO_PI_R_V39 NEO_PI_R_V44 NEO_PI_R_V49 NEO_PI_R_V54 NEO_PI_R_V59 
+    NEO_PI_R_V64 NEO_PI_R_V69 NEO_PI_R_V74 NEO_PI_R_V79 NEO_PI_R_V84 NEO_PI_R_V89  
+    NEO_PI_R_V94 NEO_PI_R_V99 NEO_PI_R_V104 NEO_PI_R_V109 NEO_PI_R_V114 NEO_PI_R_V119 
+    NEO_PI_R_V124 NEO_PI_R_V129 NEO_PI_R_V134 NEO_PI_R_V139 NEO_PI_R_V144 NEO_PI_R_V149 
+    NEO_PI_R_V154 NEO_PI_R_V159 NEO_PI_R_V164 NEO_PI_R_V169 NEO_PI_R_V174 NEO_PI_R_V179 
+    NEO_PI_R_V184 NEO_PI_R_V189 NEO_PI_R_V194 NEO_PI_R_V199 NEO_PI_R_V204 NEO_PI_R_V209 
+    NEO_PI_R_V214 NEO_PI_R_V219 NEO_PI_R_V224 NEO_PI_R_V229 NEO_PI_R_V234 NEO_PI_R_V239
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+* Conscientiousness (.881).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V05 NEO_PI_R_V10 NEO_PI_R_V15 NEO_PI_R_V20 NEO_PI_R_V25 NEO_PI_R_V30  
+    NEO_PI_R_V35 NEO_PI_R_V40 NEO_PI_R_V45 NEO_PI_R_V50 NEO_PI_R_V55 NEO_PI_R_V60 
+    NEO_PI_R_V65 NEO_PI_R_V70 NEO_PI_R_V75 NEO_PI_R_V80 NEO_PI_R_V85 NEO_PI_R_V90  
+    NEO_PI_R_V95 NEO_PI_R_V100 NEO_PI_R_V105 NEO_PI_R_V110 NEO_PI_R_V115 NEO_PI_R_V120 
+    NEO_PI_R_V125 NEO_PI_R_V130 NEO_PI_R_V135 NEO_PI_R_V140 NEO_PI_R_V145 NEO_PI_R_V150 
+    NEO_PI_R_V155 NEO_PI_R_V160 NEO_PI_R_V165 NEO_PI_R_V170 NEO_PI_R_V175 NEO_PI_R_V180 
+    NEO_PI_R_V185 NEO_PI_R_V190 NEO_PI_R_V195 NEO_PI_R_V200 NEO_PI_R_V205 NEO_PI_R_V210 
+    NEO_PI_R_V215 NEO_PI_R_V220 NEO_PI_R_V225 NEO_PI_R_V230 NEO_PI_R_V235 NEO_PI_R_V240
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** Neuroticism - Facets.
+** N1 - Anxiety (.803).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V01, NEO_PI_R_V31, NEO_PI_R_V61, NEO_PI_R_V91, NEO_PI_R_V121, NEO_PI_R_V151, NEO_PI_R_V181, NEO_PI_R_V211
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** N2 - Angry Hostility (.697).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V06, NEO_PI_R_V36, NEO_PI_R_V66, NEO_PI_R_V96, NEO_PI_R_V126, NEO_PI_R_V156, NEO_PI_R_V186, NEO_PI_R_V216
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** N3 - Depression (.773).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V11, NEO_PI_R_V41, NEO_PI_R_V71, NEO_PI_R_V101, NEO_PI_R_V131, NEO_PI_R_V161, NEO_PI_R_V191, NEO_PI_R_V221
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** N4 - Self-Consciousness (.668).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V16, NEO_PI_R_V46, NEO_PI_R_V76, NEO_PI_R_V106, NEO_PI_R_V136, NEO_PI_R_V166, NEO_PI_R_V196, NEO_PI_R_V226
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** N5 - Impulsiveness (.529).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V21, NEO_PI_R_V51, NEO_PI_R_V81, NEO_PI_R_V111, NEO_PI_R_V141, NEO_PI_R_V171, NEO_PI_R_V201, NEO_PI_R_V231
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** N6 - Vulnerability (.735).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V26, NEO_PI_R_V56, NEO_PI_R_V86, NEO_PI_R_V116, NEO_PI_R_V146, NEO_PI_R_V176, NEO_PI_R_V206, NEO_PI_R_V236
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+
+** Extraversion - Facets.
+** E1 - Warmth (.722).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V02, NEO_PI_R_V32, NEO_PI_R_V62, NEO_PI_R_V92, NEO_PI_R_V122, NEO_PI_R_V152, NEO_PI_R_V182, NEO_PI_R_V212
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** E2 - Gregariousness (.745).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V07, NEO_PI_R_V37, NEO_PI_R_V67, NEO_PI_R_V97, NEO_PI_R_V127, NEO_PI_R_V157, NEO_PI_R_V187, NEO_PI_R_V217
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** E3 - Assertiveness (.826).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V12, NEO_PI_R_V42, NEO_PI_R_V72, NEO_PI_R_V102, NEO_PI_R_V132, NEO_PI_R_V162, NEO_PI_R_V192, NEO_PI_R_V222
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** E4 - Activity (.660).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V17, NEO_PI_R_V47, NEO_PI_R_V77, NEO_PI_R_V107, NEO_PI_R_V137, NEO_PI_R_V167, NEO_PI_R_V197, NEO_PI_R_V227
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** E5 - Excitement-Seeking (.577).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V22, NEO_PI_R_V52, NEO_PI_R_V82, NEO_PI_R_V112, NEO_PI_R_V142, NEO_PI_R_V172, NEO_PI_R_V202, NEO_PI_R_V232
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** E6 - Positive Emotions (.796).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V27, NEO_PI_R_V57, NEO_PI_R_V87, NEO_PI_R_V117, NEO_PI_R_V147, NEO_PI_R_V177, NEO_PI_R_V207, NEO_PI_R_V237
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** Openness to experience - Facets.
+** O1 - Fantasy (.682).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V03, NEO_PI_R_V33, NEO_PI_R_V63, NEO_PI_R_V93, NEO_PI_R_V123, NEO_PI_R_V153, NEO_PI_R_V183, NEO_PI_R_V213
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** O2 - Aesthetics (.756).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V08, NEO_PI_R_V38, NEO_PI_R_V68, NEO_PI_R_V98, NEO_PI_R_V128, NEO_PI_R_V158, NEO_PI_R_V188, NEO_PI_R_V218
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** O3 - Feelings (.702).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V13, NEO_PI_R_V43, NEO_PI_R_V73, NEO_PI_R_V103, NEO_PI_R_V133, NEO_PI_R_V163, NEO_PI_R_V193, NEO_PI_R_V223
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** O4 - Actions (.601).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V18, NEO_PI_R_V48, NEO_PI_R_V78, NEO_PI_R_V108, NEO_PI_R_V138, NEO_PI_R_V168, NEO_PI_R_V198, NEO_PI_R_V228
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** O5 - Ideas (.740).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V23, NEO_PI_R_V53, NEO_PI_R_V83, NEO_PI_R_V113, NEO_PI_R_V143, NEO_PI_R_V173, NEO_PI_R_V203, NEO_PI_R_V233
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** O6 - Values (.458).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V28, NEO_PI_R_V58, NEO_PI_R_V88, NEO_PI_R_V118, NEO_PI_R_V148, NEO_PI_R_V178, NEO_PI_R_V208, NEO_PI_R_V238
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+* Agreeableness - Facets.
+** A1 - Trust (.682).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V04, NEO_PI_R_V34, NEO_PI_R_V64, NEO_PI_R_V94, NEO_PI_R_V124, NEO_PI_R_V154, NEO_PI_R_V184, NEO_PI_R_V214
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** A2 - Straightforwardness (.539).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V09, NEO_PI_R_V39, NEO_PI_R_V69, NEO_PI_R_V99, NEO_PI_R_V129, NEO_PI_R_V159, NEO_PI_R_V189, NEO_PI_R_V219
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** A3 - Altruism (.681).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V14, NEO_PI_R_V44, NEO_PI_R_V74, NEO_PI_R_V104, NEO_PI_R_V134, NEO_PI_R_V164, NEO_PI_R_V194, NEO_PI_R_V224
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** A4 - Compliance (.548).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V19, NEO_PI_R_V49, NEO_PI_R_V79, NEO_PI_R_V109, NEO_PI_R_V139, NEO_PI_R_V169, NEO_PI_R_V199, NEO_PI_R_V229
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** A5 - Modesty (.700).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V24, NEO_PI_R_V54, NEO_PI_R_V84, NEO_PI_R_V114, NEO_PI_R_V144, NEO_PI_R_V174, NEO_PI_R_V204, NEO_PI_R_V234
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** A6 - Tender-Mindedness (.485).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V29, NEO_PI_R_V59, NEO_PI_R_V89, NEO_PI_R_V119, NEO_PI_R_V149, NEO_PI_R_V179, NEO_PI_R_V209, NEO_PI_R_V239
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** Conscientiousness - Facets.
+** C1 - Competence (.685).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V05, NEO_PI_R_V35, NEO_PI_R_V65, NEO_PI_R_V95, NEO_PI_R_V125, NEO_PI_R_V155, NEO_PI_R_V185, NEO_PI_R_V215
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** C2 - Order (.585).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V10, NEO_PI_R_V40, NEO_PI_R_V70, NEO_PI_R_V100, NEO_PI_R_V130, NEO_PI_R_V160, NEO_PI_R_V190, NEO_PI_R_V220
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** C3 - Dutifulness (.614).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V15, NEO_PI_R_V45, NEO_PI_R_V75, NEO_PI_R_V105, NEO_PI_R_V135, NEO_PI_R_V165, NEO_PI_R_V195, NEO_PI_R_V225
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** C4 - Achievement Striving (.637).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V20, NEO_PI_R_V50, NEO_PI_R_V80, NEO_PI_R_V110, NEO_PI_R_V140, NEO_PI_R_V170, NEO_PI_R_V200, NEO_PI_R_V230
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** C5 - Self-Discipline (.710).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V25, NEO_PI_R_V55, NEO_PI_R_V85, NEO_PI_R_V115, NEO_PI_R_V145, NEO_PI_R_V175, NEO_PI_R_V205, NEO_PI_R_V235
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** C6 - Deliberation (.681).
+RELIABILITY
+  /VARIABLES=NEO_PI_R_V30, NEO_PI_R_V60, NEO_PI_R_V90, NEO_PI_R_V120, NEO_PI_R_V150, NEO_PI_R_V180, NEO_PI_R_V210, NEO_PI_R_V240
+  /SCALE('ALL VARIABLES') ALL
+  /MODEL=ALPHA
+  /STATISTICS=CORR.
+
+** ================================================================
+** === Data extraction for statistical analysis in Matlab and R ===
+** ================================================================.
+
+** Save NEO dataset with variables of interest in .sav format.
+SELECT IF (Filter_NEO_VIGALL eq 1).
+EXECUTE.
+
+SAVE OUTFILE='code/derivatives/01_bigv_arousal.sav'
+   /KEEP=SIC VIGALL_DT3_214_EEG_Code Ruhe_Alter RKM_Geschlecht Ruhe_kOhm_timestamp_korr Filter_NEO_VIGALL VIGALL_DT3_214_V_1_20 VIGALL_DT3_214_SI_20_5 VIGALL_DT3_214_V_LogSqR_adj
+NEO_N_T NEO_E_T NEO_O_T NEO_A_T NEO_C_T
+NEO_N1_T NEO_N2_T NEO_N3_T NEO_N4_T NEO_N5_T NEO_N6_T
+NEO_E1_T NEO_E2_T NEO_E3_T NEO_E4_T NEO_E5_T NEO_E6_T
+NEO_O1_T NEO_O2_T NEO_O3_T NEO_O4_T NEO_O5_T NEO_O6_T
+NEO_A1_T NEO_A2_T NEO_A3_T NEO_A4_T NEO_A5_T NEO_A6_T
+NEO_C1_T NEO_C2_T NEO_C3_T NEO_C4_T NEO_C5_T NEO_C6_T.
+
+** Save NEO dataset for analyses in Matlab and R in tab-delimited .txt format.
+GET FILE='code/derivatives/01_bigv_arousal.sav'.
+DATASET NAME BIGV.
+DATASET ACTIVATE BIGV.
+DATASET CLOSE MAIN.
+FORMATS Ruhe_kOhm_timestamp_korr(F8.5).
+COMPUTE Ruhe_kOhm_timestamp_korr = Ruhe_kOhm_timestamp_korr/86400*24.
+EXECUTE.
+
+SAVE TRANSLATE OUT = 'code/derivatives/01_bigv_arousal.txt'
+   / TYPE=TAB
+   / FIELDNAMES
+   / REPLACE
+   / MAP. 

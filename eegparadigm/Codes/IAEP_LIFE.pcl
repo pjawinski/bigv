@@ -1,0 +1,162 @@
+#-- pcl part --
+
+int num_trial = 648;
+int clock_start;
+int clock_start_pause;
+int clock_stop;
+
+clock_start = clock.time ();
+	loop int i = clock.time ();
+		until i-clock_start > 1000
+			begin
+				i = clock.time ();
+	end;
+
+output_port parallel = output_port_manager.get_port (1);
+
+array<int> type[num_trial];
+
+int count = 0;
+input_file num_file = new input_file;
+num_file.open ("seq_laap.txt");
+
+loop 
+	until num_file.end_of_file ()
+		begin
+			count = count + 1; 
+			type[count] = num_file.get_int();
+		end;
+
+trial1_instruktion.present ();
+trial2_nachfrage_instruktion.present ();
+trail5_pause.present ();
+
+loop int i = 1
+   until i > num_trial
+      begin
+			if type[i] == 1
+			then
+			   trial_96_2100.present ();
+			end;
+			if type[i] == 2
+			then
+			   trial_96_2000.present ();
+			end;   
+			if type[i] == 3
+			then
+			   trial_96_1900.present ();
+			end;
+			if type[i] == 4
+			then
+				trial_96_1800.present ();
+			end;
+			if type[i] == 5
+			then
+			   trial_96_1700.present ();
+			end;
+			if type[i] == 6
+			then
+			   trial_96_1600.present ();
+			end;
+			if type[i] == 7
+			then
+			   trial_90_2100.present ();
+			end;
+			if type[i] == 8
+			then
+			   trial_90_2000.present ();
+			end;
+			if type[i] == 9
+			then
+			   trial_90_1900.present ();
+			end;
+			if type[i] == 10
+			then
+			   trial_90_1800.present ();
+			end;
+			if type[i] == 11
+			then
+			   trial_90_1700.present ();
+			end;
+			if type[i] == 12
+			then
+			   trial_90_1600.present ();
+			elseif type[i] == 13
+			then
+			   trial_84_2100.present ();
+			end; 
+			if type[i] == 14
+			then
+			   trial_84_2000.present ();
+			end;
+			if type[i] == 15
+			then
+			   trial_84_1900.present ();
+			end;
+			if type[i] == 16
+			then
+			   trial_84_1800.present ();
+			end;
+			if type[i] == 17
+			then
+			   trial_84_1700.present ();
+			end;
+			if type[i] == 18
+			then
+			   trial_84_1600.present ();
+			end;
+			if type[i] == 19
+			then
+			   trial_78_2100.present ();
+			end;
+			if type[i] == 20
+			then
+			   trial_78_2000.present ();
+			end;
+			if type[i] == 21
+			then
+			   trial_78_1900.present ();
+			end;
+			if type[i] == 22
+			then
+			   trial_78_1800.present ();
+			end;
+			if type[i] == 23
+			then
+			   trial_78_1700.present ();
+			end;
+			if type[i] == 24
+			then
+			   trial_78_1600.present ();
+			end;
+			if type[i] == 25
+			then
+			   trial_72_2100.present ();
+			end;
+			if type[i] == 26
+			then
+			   trial_72_2000.present ();
+			end;
+			if type[i] == 27
+			then
+			   trial_72_1900.present ();
+			end;
+			if type[i] == 28
+			then
+			   trial_72_1800.present ();
+			end;
+			if type[i] == 29
+			then
+			   trial_72_1700.present ();
+			end;
+			if type[i] == 30
+			then
+			   trial_72_1600.present ();
+			end;
+
+	i = i + 1;
+end;
+
+trail5_pause.present ();
+trial3_laap_ende.present ();
+trial4_nachfrage_laap_ende.present ();

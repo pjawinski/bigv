@@ -1,0 +1,48 @@
+#--pcl part
+int clock_start;
+int clock_start_pause;
+int clock_stop;
+
+output_port parallel = output_port_manager.get_port (1);
+
+clock_start = clock.time ();
+	loop int i = clock.time ();
+		until i-clock_start > 1000
+			begin
+				i = clock.time ();
+	end;
+	
+trial1_instruktion_augenbewegungen.present ();
+trial2_nachfrage_instruktion_augenbewegungen.present ();
+trail21_pause.present ();
+trial3_augenbewegung_oben.present ();
+trial4_augenbewegung_unten.present ();
+trial5_augenbewegung_rechts.present ();
+trial6_augenbewegung_links.present ();
+trial7_augenbewegung_geradeaus.present ();
+trail21_pause.present ();
+trial8_instruktion_berger.present ();
+trial9_nachfrage_instruktion_berger.present ();
+trail21_pause.present ();
+
+loop int a = 1
+	until a > 3
+		begin
+			trial10_augenoeffnung.present ();
+			trial11_augenschluss.present ();
+	a = a + 1;
+end; 
+
+trial22_pause.present ();			
+trial12_instruktion_kopfrechnen.present ();
+trial13_nachfrage_instruktion_kopfrechnen.present ();
+trail23_pause.present ();
+trial14_kopfrechnen.present ();
+trial15_ergebnis_kopfrechnen.present ();
+trail21_pause.present ();
+trial16_instruktion_ruhe.present (); 
+trial17_nachfrage_instruktion_ruhe.present ();
+trail23_pause.present ();
+trial18_ruhephase.present ();
+trial19_ruhe_ende.present ();
+trial20_untersuchung_ende.present ();
