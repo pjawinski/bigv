@@ -10,7 +10,10 @@ renv::activate()
 renv::restore(prompt = FALSE)
 
 # attach packages to current R session
+library(data.table)
 library(ggplot2)
+library(patchwork)
+library(dplyr)
 
 # load dataset (synthetic dataset at 'synthetic/01_bigv_arousal_synthetic.txt')
 df = read.delim('code/derivatives/01_bigv_arousal.txt', sep='\t', header=T ,quote = "\"",stringsAsFactors=FALSE)
@@ -39,7 +42,7 @@ sum(vigall_sma$VIGALL_DT3_214_EEG_Code %in% df$VIGALL_DT3_214_EEG_Code) # 468 hi
 vigall_sma$VIGALL_DT3_214_EEG_Code[duplicated(vigall_sma$VIGALL_DT3_214_EEG_Code)] %in% df$VIGALL_DT3_214_EEG_Code # should be FALSE
 
 # merge datasets
-merge = join(bigv, vigall_sma, by="VIGALL_DT3_214_EEG_Code")
+merge = left_join(bigv, vigall_sma, by="VIGALL_DT3_214_EEG_Code")
 
 # --------------------
 # -- draw boxplots ---
@@ -102,7 +105,7 @@ maketsplot = function(df, varname, varlabel, fillcolors, show.yaxis) {
   dfplot$time = rep((1:1200)/60,2) 
   
   # add group means
-  colT1 =  which(names(df) %in% 'T1' ); colT1200 = colT1 + 1199
+  colT1 = which(names(df) %in% 'T1' ); colT1200 = colT1 + 1199
   df = data.frame(df)
   dfplot$mean[1:1200] = as.vector(sapply(df[df[,varname] == 'low', colT1:colT1200], mean))
   dfplot$mean[1201:2400] = as.vector(sapply(df[df[,varname] == 'high', colT1:colT1200], mean))
