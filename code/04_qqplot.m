@@ -1,9 +1,9 @@
-% ==================================================================================
-% == Big Five personality traits and brain arousal in the resting state: QQ-plot ===
-% ==================================================================================
+% ====================================================================
+% == Draw quantile-quantile plot of observed vs. expected p-values ===
+% ====================================================================
 
 % set working directory
-cd /Users/philippe/desktop/projects/bigv_arousal
+cd /users/philippe/desktop/projects/bigv_arousal
 
 % load data
 load('code/derivatives/03_permutations_bigv.mat', 'p_exp', 'p_obs');

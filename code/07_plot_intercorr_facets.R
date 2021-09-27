@@ -54,7 +54,7 @@ varint = as.data.frame(matrix(c(
   'NEO_C6_T', 'Deliberation C6',  'C6'), ncol = 3, byrow = T))
 names(varint) = c('varnames', 'varlabels', 'varlabels.y')
 
-## define function for correlation matrix
+# define function for correlation matrix
 makecorr = function(df, varnames, varlabels, varlabels.y = NULL, cronbach = NULL, covnames = NULL, type) {
   
   # prepare data.frame
@@ -63,7 +63,7 @@ makecorr = function(df, varnames, varlabels, varlabels.y = NULL, cronbach = NULL
   df = df[,varnames]
   names(df) = varlabels.y
   
-  # make empty data.frames for rho and pval
+  # create empty data.frames for rho and pval
   df.rho = df.pval = df.n = data.frame(matrix(data = NA, nrow = length(df), ncol = length(df)))
   names(df.rho) = names(df.pval) = names(df.n) = names(df)
   
@@ -111,14 +111,12 @@ makecorr = function(df, varnames, varlabels, varlabels.y = NULL, cronbach = NULL
   df.m$rho = df.m$rho_4color = as.numeric(df.m$rho)
   
   # get rho value where p = 0.05
-  sign_threshold = pwr.r.test(n = 468, r = NULL, sig.level = 0.05/(30*29/2), power = 0.5, alternative = "two.sided")$r
   sign_threshold = pwr.r.test(n = 468, r = NULL, sig.level = 0.05, power = 0.5, alternative = "two.sided")$r
   
   # use rho as fill gradient - do not color if corresponding p value > 0.05
   df.m$pval = as.numeric(reshape2::melt(df.pval, id="id", variable.name="id_y", value.name="pval", na.rm = F)$pval)
   df.m$rho_4color[df.m$pval > 0.05] = NA # nominal significance
-  # df.m$rho_4color[df.m$pval > 0.05/(length(df)*(length(df)-1)/2)] = NA # Bonferroni significance
-  
+
   # add variables for ggplotly tooltip
   df.m$x = df.m$id
   df.m$y = df.m$id_y
@@ -207,6 +205,6 @@ system('rm -rf code/figures/intercorr_facets_files')
 # import facet correlation results as derived using MATLAB
 intercorr = read.table('code/tables/intercorr_facets.txt', header = T, sep = '\t')
 
-# check if rho and pval estimates are the same (up to 12 digits)
+# check if rho and pval estimates are the same (up to 10 digits)
 sum(as.vector(round(results$rho[,2:31],10) != round(intercorr[,2:31],10))) == 0 # no deviations
-sum(as.vector(round(results$pval[,2:31],10) != round(intercorr[,32:61],10))) == 0 # no deviaions
+sum(as.vector(round(results$pval[,2:31],10) != round(intercorr[,32:61],10))) == 0 # no deviations

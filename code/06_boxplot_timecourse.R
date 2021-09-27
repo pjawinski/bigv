@@ -3,7 +3,7 @@
 # ===============================================================================================
     
 # set working directory
-setwd('/Users/philippe/desktop/projects/bigv_arousal')
+setwd('/users/philippe/desktop/projects/bigv_arousal')
 
 # activate R environment
 renv::activate()
@@ -27,13 +27,13 @@ setDT(bigv)[,NEO_O_T_mediansplit := cut(NEO_O_T, quantile(NEO_O_T, probs = seq(0
 setDT(bigv)[,NEO_A_T_mediansplit := cut(NEO_A_T, quantile(NEO_A_T, probs = seq(0,1,0.5)), labels = c('low', 'high'), include.lowest = TRUE)]
 setDT(bigv)[,NEO_C_T_mediansplit := cut(NEO_C_T, quantile(NEO_C_T, probs = seq(0,1,0.5)), labels = c('low', 'high'), include.lowest = TRUE)]
 
-# Load time-courses
+# load classifications
 vigall_sma = read.delim('code/derivatives/vigall_classifications_sma.txt', sep = '\t', header = TRUE)
 names(vigall_sma)[1] = "VIGALL_DT3_214_EEG_Code"
 names(vigall_sma)[2:1201] = c(paste0("T",as.character(1:1200)))
 
 # check for duplicates
-sum(duplicated(vigall_sma$VIGALL_DT3_214_EEG_Code)) # one duplicate
+sum(duplicated(vigall_sma$VIGALL_DT3_214_EEG_Code)) # one duplicate (zero in synthetic dataset)
 sum(duplicated(df$SIC)) # zero duplicates
 
 # any duplicates in selection? - Nope.
@@ -96,7 +96,7 @@ dev.off()
 # -- make time series plot ---
 # ----------------------------
 
-maketsplot = function(df, varname, varlabel, fillcolors, show.yaxis) {
+maketsplot = function(df, varname, varlabel, fillcolors) {
   
   # create data frame
   dfplot = data.frame(matrix(nrow = 1200*2, ncol = 6))
@@ -131,7 +131,6 @@ maketsplot = function(df, varname, varlabel, fillcolors, show.yaxis) {
     theme(plot.margin=margin(5.5,5.5,5.5,5.5),
           legend.title = element_blank(),
           legend.text = element_text(size = 7),
-          #text = element_text(family = 'CMU Serif'),
           plot.title = element_text(size = 8, hjust = 0.5, face = 'bold'),
           axis.title = element_text(size = 8),
           axis.title.x = element_text(size = 8, margin = margin(t = 5, r = 0, b = 0, l = 0)),
@@ -143,11 +142,11 @@ maketsplot = function(df, varname, varlabel, fillcolors, show.yaxis) {
 }
 
 # draw time courses for bigv personality traits
-N_ts = maketsplot(merge, 'NEO_N_T_mediansplit', 'Neuroticism', c('#1B99C1','#C05351'), TRUE)
-E_ts = maketsplot(merge, 'NEO_E_T_mediansplit', 'Extraversion', c('#1B99C1','#C05351'), TRUE)
-O_ts = maketsplot(merge, 'NEO_O_T_mediansplit', 'Openness', c('#1B99C1','#C05351'), TRUE)
-A_ts = maketsplot(merge, 'NEO_A_T_mediansplit', 'Agreeableness', c('#1B99C1','#C05351'), TRUE)
-C_ts = maketsplot(merge, 'NEO_C_T_mediansplit', 'Conscientiousness', c('#1B99C1','#C05351'), TRUE)
+N_ts = maketsplot(merge, 'NEO_N_T_mediansplit', 'Neuroticism', c('#1B99C1','#C05351'))
+E_ts = maketsplot(merge, 'NEO_E_T_mediansplit', 'Extraversion', c('#1B99C1','#C05351'))
+O_ts = maketsplot(merge, 'NEO_O_T_mediansplit', 'Openness', c('#1B99C1','#C05351'))
+A_ts = maketsplot(merge, 'NEO_A_T_mediansplit', 'Agreeableness', c('#1B99C1','#C05351'))
+C_ts = maketsplot(merge, 'NEO_C_T_mediansplit', 'Conscientiousness', c('#1B99C1','#C05351'))
 
 # merge into one plot
 layout = "AAABBBCCC

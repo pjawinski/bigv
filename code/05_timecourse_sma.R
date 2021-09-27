@@ -3,7 +3,7 @@
 # ==========================================================================================================
     
 # set working directory
-setwd('/Users/philippe/desktop/projects/bigv_arousal')
+setwd('/users/philippe/desktop/projects/bigv_arousal')
 
 # activate R environment
 renv::activate()

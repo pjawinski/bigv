@@ -1,7 +1,7 @@
 ﻿* Encoding: UTF-8.
-** ==========================================================
-** === The Big Five personality traits and CNS arousal in the resting state ===
-** ==========================================================.
+** ==============================================================================
+** === The Big Five personality traits and brain arousal in the resting state ===
+** ==============================================================================.
 
 ** Selection criteria for EEG-vigilance analysis (LIFE DQP)
 **                         T00057 - EEG
@@ -24,12 +24,12 @@
 **                         Ausschluss_Med_EEGkrit_201602: EEG affecting drugs
 **                         Ausschluss_Med_EEGrisk_201602: Drugs that potentially affect the EEG
 
-** =============================
+** ===================================
 ** === Get data and select sample  ===
-** =============================.
+** ===================================.
 
 ** set working directory.
-cd '/Users/philippe/desktop/projects/bigv_arousal'.
+cd '/users/philippe/desktop/projects/bigv_arousal'.
 
 ** load data.
 GET FILE='data/main.sav'.
@@ -63,11 +63,7 @@ VALUE LABELS Filter_NEO_VIGALL
 EXECUTE.
 
 USE ALL.
-COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
-VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
-VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
-FORMATS filter_$ (f1.0).
-FILTER BY filter_$.
+FILTER BY Filter_NEO_VIGALL.
 
 FREQUENCIES VARIABLES=Filter_NEO_VIGALL
   /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
@@ -88,11 +84,7 @@ VALUE LABELS Filter_NEO_VIGALL
 EXECUTE.
 
 USE ALL.
-COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
-VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
-VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
-FORMATS filter_$ (f1.0).
-FILTER BY filter_$.
+FILTER BY Filter_NEO_VIGALL.
 
 FREQUENCIES VARIABLES=Filter_NEO_VIGALL
   /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
@@ -113,11 +105,7 @@ VALUE LABELS Filter_NEO_VIGALL
 EXECUTE.
 
 USE ALL.
-COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
-VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
-VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
-FORMATS filter_$ (f1.0).
-FILTER BY filter_$.
+FILTER BY Filter_NEO_VIGALL.
 
 FREQUENCIES VARIABLES=Filter_NEO_VIGALL
   /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
@@ -139,19 +127,15 @@ VALUE LABELS Filter_NEO_VIGALL
 EXECUTE.
 
 USE ALL.
-COMPUTE filter_$=(Filter_NEO_VIGALL= 1).
-VARIABLE LABELS filter_$ 'Filter_NEO_VIGALL = 1 (FILTER)'.
-VALUE LABELS filter_$ 0 'Not Selected' 1 'Selected'.
-FORMATS filter_$ (f1.0).
-FILTER BY filter_$.
+FILTER BY Filter_NEO_VIGALL.
 
 FREQUENCIES VARIABLES=Filter_NEO_VIGALL
   /STATISTICS=STDDEV MEAN MINIMUM MAXIMUM
   /ORDER=ANALYSIS.
 
-** =======================================
-** === Descriptive statistics and Conbachs alpha ===
-** =======================================.
+** ===============================
+** === Descriptive statistics  ===
+** ===============================.
 
 ** age and sex.
 FREQUENCIES VARIABLES=Ruhe_Alter RKM_Geschlecht
@@ -165,9 +149,9 @@ FREQUENCIES VARIABLES=NEO_N_T NEO_E_T NEO_O_T NEO_A_T NEO_C_T VIGALL_DT3_214_V_1
   /NTILES=4
   /ORDER=ANALYSIS.
 
-** ======================
+** ============================
 ** === Internal consistency ===
-** ======================.
+** ============================.
 
 * Neuroticism (.906).
 RELIABILITY
@@ -280,7 +264,6 @@ RELIABILITY
   /SCALE('ALL VARIABLES') ALL
   /MODEL=ALPHA
   /STATISTICS=CORR.
-
 
 ** Extraversion - Facets.
 ** E1 - Warmth (.722), n = 467.
@@ -454,11 +437,11 @@ RELIABILITY
   /MODEL=ALPHA
   /STATISTICS=CORR.
 
-** ================================================
+** ================================================================
 ** === Data extraction for statistical analysis in Matlab and R ===
-** ================================================.
+** ================================================================.
 
-** Save NEO dataset with variables of interest in .sav format.
+** Save NEO dataset with variables of interest as .sav file.
 SELECT IF (Filter_NEO_VIGALL eq 1).
 EXECUTE.
 
@@ -471,7 +454,7 @@ NEO_O1_T NEO_O2_T NEO_O3_T NEO_O4_T NEO_O5_T NEO_O6_T
 NEO_A1_T NEO_A2_T NEO_A3_T NEO_A4_T NEO_A5_T NEO_A6_T
 NEO_C1_T NEO_C2_T NEO_C3_T NEO_C4_T NEO_C5_T NEO_C6_T.
 
-** Save NEO dataset for analyses in Matlab and R in tab-delimited .txt format.
+** Save NEO dataset for analyses in Matlab and R as tab-delimited file.
 GET FILE='code/derivatives/01_bigv_arousal.sav'.
 DATASET NAME BIGV.
 DATASET ACTIVATE BIGV.

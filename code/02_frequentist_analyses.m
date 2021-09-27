@@ -1,6 +1,6 @@
-% ===============================================================================================
-% == Big Five personality traits and brain arousal in the resting state: Frequentist analyses ===
-% ===============================================================================================
+% ===============================
+% == Run frequentist analyses ===
+% ===============================
 
 % set working directory
 cd /Users/philippe/desktop/projects/bigv_arousal
@@ -37,7 +37,7 @@ eeg.varnames = NEO.varnames(5:7,1);
 %% calculate intercorrelations between NEO variables
 [rho,p] = corr(bigv.data,'Type','Spearman');
 
-% Conbach' alpha at main diagonal (calculated using SPSS)
+% Conbach's alpha at main diagonal (calculated using SPSS)
 v = [ 0.906 0.899 0.868 0.836 0.881 ];  
 rho = rho - diag(diag(rho)) + diag(v);
 
@@ -154,7 +154,7 @@ writetable(table, 'code/tables/results_bigv_full.txt', 'Delimiter', '\t', 'Write
 table = array2table([rho_obs.partial' p_obs.partial' FDR_obs.partial'], 'VariableNames', [{'rho_Mean'}, {'rho_Stability'}, {'rho_Slope'}, {'p_Mean'}, {'p_Stability'}, {'p_Slope'}, {'FDR_Mean'}, {'FDR_Stability'}, {'FDR_Slope'}], 'RowNames', bigv.varnames(1:5,1));
 writetable(table, 'code/tables/results_bigv_partial.txt', 'Delimiter', '\t', 'WriteRowNames', 1)
 
-%% Create result output for NEO personalit facets (30 T-Scores)
+%% Create result output for NEO personality facets (30 T-Scores)
 
 % calculate correlations
 [rho_obs_full,p_obs_full] = corr(eeg.data, facets.data,'Type','Spearman');
@@ -185,5 +185,5 @@ writetable(table, 'code/tables/results_facets_full.txt', 'Delimiter', '\t', 'Wri
 table = array2table([rho_obs_facets.partial' p_obs_facets.partial' FDR_obs_facets.partial'], 'VariableNames', [{'rho_Mean'}, {'rho_Stability'}, {'rho_Slope'}, {'p_Mean'}, {'p_Stability'}, {'p_Slope'}, {'FDR_Mean'}, {'FDR_Stability'}, {'FDR_Slope'}], 'RowNames', facets.varnames);
 writetable(table, 'code/tables/results_facets_partial.txt', 'Delimiter', '\t', 'WriteRowNames', 1)
 
-%% save variables in .mat-File
+%% save variables in .mat file
 save('code/derivatives/02_bigv_arousal_results.mat', 'NEO', 'eeg', 'bigv', 'covs', 'facets', 'p_obs', 'rho_obs', 'FDR_obs', 'p_obs_facets', 'rho_obs_facets', 'FDR_obs_facets');

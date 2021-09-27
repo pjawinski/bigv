@@ -1,9 +1,9 @@
-# ===================================================
-# === Get Bayes Factors for Spearman Correlations ===
-# ===================================================
+# ==============================================================
+# === Carry out Bayesian correlations and save Bayes factors ===
+# ==============================================================
 
 # set working directory
-setwd('/Users/philippe/Desktop/projects/bigv_arousal')
+setwd('/users/philippe/desktop/projects/bigv_arousal')
 
 # activate R environment
 source("renv/activate.R")
