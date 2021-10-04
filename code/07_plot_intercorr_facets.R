@@ -16,8 +16,9 @@ library(plotly)
 library(ppcor)
 library(reshape2)
 library(scales)
+library(pwr)
 
-# load data
+# load data (synthetic dataset at 'synthetic/01_bigv_arousal_synthetic.txt')
 df = read.delim('code/derivatives/01_bigv_arousal.txt', sep = '\t', header = TRUE)
 
 # define vars of interest
@@ -167,19 +168,17 @@ makecorr = function(df, varnames, varlabels, varlabels.y = NULL, cronbach = NULL
 }
 
 # set internal consistency (see SPSS calculations)
-cronbach$rho = c(0.803, 0.697, 0.773, 0.668, 0.529, 0.735,
+cronbach = data.frame(rho = c(0.803, 0.697, 0.773, 0.668, 0.529, 0.735,
                  0.722, 0.745, 0.826, 0.660, 0.577, 0.796,
                  0.682, 0.756, 0.702, 0.601, 0.740, 0.458,
                  0.682, 0.539, 0.681, 0.548, 0.700, 0.485,
-                 0.685, 0.585, 0.614, 0.637, 0.710, 0.681)
-
-cronbach$n = c(467, 468, 466, 468, 467, 466, 
-               467, 468, 467, 468, 468, 468, 
-               467, 468, 467, 467, 468, 468,
-               468, 467, 468, 468, 467, 468, 
-               468, 467, 468, 468, 468, 468)
-
-cronbach$p = rep(-1,30)
+                 0.685, 0.585, 0.614, 0.637, 0.710, 0.681),
+                 n = c(467, 468, 466, 468, 467, 466, 
+                 467, 468, 467, 468, 468, 468, 
+                 467, 468, 467, 467, 468, 468,
+                 468, 467, 468, 468, 467, 468, 
+                 468, 467, 468, 468, 468, 468),
+                 p = rep(-1,30))
 
 # calculate correlations (ignore tie warning)
 results = makecorr(df = df, varnames = varint$varnames, varlabels = varint$varlabels, varlabels.y = NULL, cronbach = cronbach, type = 'spearman')
