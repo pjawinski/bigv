@@ -8,6 +8,7 @@ Keywords: Arousal, Big Five, EEG, Resting State, VIGALL, Extraversion, Neurotici
 
 ## Folder structure
 [code/](code/) - contains all analysis scripts as well as the extracted [tables](code/tables), [figures](code/figures) and required Matlab [functions](code/functions)<br>
+[eegparadigm/](code/) - contains the Presentation® files that were used to run the EEG experiment<br>
 [synthetic/](synthetic/) - contains a synthetic dataset that mimics the original observed data<br>
 [renv/](renv/) - contains a single file to initiate the R environment (the scripts located in [code/](code/) refer to this file)<br>
 [renv.lock](renv.lock) - a list of R packages automatically downloaded and attached to the R environment of this project<br>
