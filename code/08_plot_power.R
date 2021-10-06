@@ -5,9 +5,15 @@
 # set working directory
 setwd('/Users/philippe/desktop/projects/bigv_arousal')
 
+# detach 'other packages' if there are any
+if (!is.null(names(sessionInfo()$otherPkgs))) {
+invisible(lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE))
+}
+
 # activate R environment
 if (exists('.rs.restartR', mode = 'function')) { .rs.restartR() }
 source('renv/activate.R')
+renv::activate(getwd())
 renv::restore(prompt = FALSE)
 
 # attach packages to current R session
@@ -45,16 +51,16 @@ xlim = c(lowerlimit,upperlimit)
 xticks = seq(lowerlimit,upperlimit,0.1)
 
 # save as pdf and png
-dir.create('code/figures')
+dir.create('code/figures', showWarnings = FALSE)
 for (img in c('pdf', 'png')) {
   
   if (img == 'pdf') { 
-    pdf(file = 'code/figures/power.pdf', width=10/2.54, height=12/2.54)
+    pdf(file = 'code/figures/power.pdf', width=10/2.54, height=9.5/2.54)
   } else {
-    png(filename = 'code/figures/power.png', width=10/2.54, height=12/2.54, units = "in", res = 600)
+    png(filename = 'code/figures/power.png', width=10/2.54, height=9.5/2.54, units = "in", res = 600)
   }
   
-  par(mgp = c(2, 0.7, 0), lwd=0.5)
+  par(mar = c(3.1, 4.1, 1.1, 2.1), mgp = c(2, 0.7, 0), lwd=0.5)
   plot(uncorr$r,uncorr$power,
        type="n",
        main="", 
