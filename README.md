@@ -7,10 +7,10 @@ Based on Eysenck’s biopsychological trait theory, brain arousal has long been 
 Keywords: Arousal, Big Five, EEG, Resting State, VIGALL, Extraversion, Neuroticism, Impulsivity<br>
 
 ## Folder structure
-[code/](code/) - contains all analysis scripts as well as the extracted [tables](code/tables), [figures](code/figures) and required Matlab [functions](code/functions)<br>
-[eegparadigm/](code/) - contains the Presentation® files that were used to run the EEG experiment<br>
-[renv/](renv/) - contains a single file to initiate the R environment (the scripts located in [code/](code/) refer to this file)<br>
-[synthetic/](synthetic/) - contains a synthetic dataset that mimics the original observed data<br>
+[code](code) - contains all analysis scripts as well as the extracted [tables](code/tables), [figures](code/figures) and required Matlab [functions](code/functions)<br>
+[eegparadigm](code) - contains the Presentation® files that were used to run the EEG experiment<br>
+[renv](renv/) - contains a single file to initiate the R environment (the scripts located in [code](code) refer to this file)<br>
+[synthetic](synthetic) - contains a synthetic dataset that mimics the original observed data<br>
 [renv.lock](renv.lock) - a list of R packages automatically downloaded and attached to the R environment of this project<br>
 [setwd.sh](setwd.sh) - a script to automatically set the working directory in all analysis scripts<br>
 
@@ -24,7 +24,7 @@ You may then update the specified working directory in each analysis script via 
 ```
 ./setwd.sh
 ```
-You are now ready to run all scripts located in [code/](code/) according to their numbering one after another (starting from '02_bayesian_analyses.R'). R scripts can be run from command line or from within RStudio. The R environment is activated by the scripts and required packages are downloaded automatically. Please note that you need to change the relative path of the original dataset (not publicly available) to the synthetic dataset at respective lines.
+You are now ready to run all scripts located in [code](code) according to their numbering one after another (starting from '02_bayesian_analyses.R'). R scripts can be run from command line or from within RStudio. The R environment is activated by the scripts and required packages are downloaded automatically. Please note that you need to change the relative path of the original dataset (not publicly available) to the synthetic dataset at respective lines.
 
 ## Figures
 ![alt text](https://pjawinski.github.io/bigv/code/figures/timeseries.png "Figure 1")
