@@ -6,6 +6,24 @@ Based on Eysenck’s biopsychological trait theory, brain arousal has long been 
 
 Keywords: Arousal, Big Five, EEG, Resting State, VIGALL, Extraversion, Neuroticism, Impulsivity<br>
 
+## Folder structure
+[code/](code/) - contains all analysis scripts as well as the extracted [tables](code/tables), [figures](code/figures) and required Matlab [functions](functions)<br>
+[synthetic/](synthetic/) - contains a synthetic dataset that mimics the original observed data<br>
+[renv/](renv/) - contains a single file to initiate the R environment (the scripts located in [code/](code/) refer to this file)<br>
+[renv.lock](renv.lock) - a list of R packages automatically downloaded and attached to the R environment of this project<br>
+[setwd.sh](setwd.sh) - a script to automatically set the working directory in all analysis scripts<br>
+
+## How to use this repository
+In order to reproduce our statistical analyses, you should first clone this repository via the the following commands:
+```
+git clone https://github.com/pjawinski/bigv.git
+cd bigv
+```
+You may then update the specified working directory in each analysis script via the following command:
+```
+./setwd.sh
+```
+You are now ready to run all scripts located in [code/](code/) according to their numbering one after another. R scripts can be run from command line or from within RStudio. The R environment is activated by the scripts and required packages are downloaded automatically. Please note that you need to change the relative path of the original dataset (not publicly available) to the synthetic dataset at respective lines.
 
 ## Figures
 [Fig. 1](https://pjawinski.github.io/bigv/code/figures/timeseries.png) - Time-courses of EEG-vigilance during the 20-minute eyes-closed resting-state condition stratified by groups scoring low vs. high on the respective Big Five scale (median-split, i.e., participants with scores in the lower vs. upper half of the ascending distribution are compared). Time-courses reflect simple moving averages (± standard error), i.e., every data point represents an averaged 61-second interval of EEG-vigilance (data point in time ± 30 seconds). Statistical analyses revealed significant associations between EEG-vigilance and both extraversion and openness to experience.<br>
