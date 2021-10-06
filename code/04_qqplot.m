@@ -3,7 +3,7 @@
 % ====================================================================
 
 % set working directory
-cd /users/philippe/desktop/projects/bigv_arousal
+cd '/users/philippe/desktop/projects/bigv_arousal'
 
 % load data
 load('code/derivatives/03_permutations_bigv.mat', 'p_exp', 'p_obs');

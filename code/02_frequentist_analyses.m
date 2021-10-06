@@ -3,7 +3,7 @@
 % ===============================
 
 % set working directory
-cd /Users/philippe/desktop/projects/bigv_arousal
+cd '/users/philippe/desktop/projects/bigv_arousal'
 
 % add path with function pncovs
 addpath code/functions/

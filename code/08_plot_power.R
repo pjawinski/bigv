@@ -7,7 +7,7 @@ setwd('/Users/philippe/desktop/projects/bigv_arousal')
 
 # detach 'other packages' if there are any
 if (!is.null(names(sessionInfo()$otherPkgs))) {
-invisible(lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE))
+  invisible(lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE))
 }
 
 # activate R environment

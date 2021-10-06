@@ -5,9 +5,15 @@
 # set working directory
 setwd('/users/philippe/desktop/projects/bigv_arousal')
 
+# detach 'other packages' if there are any
+if (!is.null(names(sessionInfo()$otherPkgs))) {
+  invisible(lapply(paste('package:',names(sessionInfo()$otherPkgs),sep=""),detach,character.only=TRUE,unload=TRUE))
+}
+
 # activate R environment
 if (exists('.rs.restartR', mode = 'function')) { .rs.restartR() }
 source('renv/activate.R')
+renv::activate(getwd())
 renv::restore(prompt = FALSE)
 
 # attach packages to current R session
